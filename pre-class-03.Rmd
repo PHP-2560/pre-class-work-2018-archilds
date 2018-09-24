@@ -65,7 +65,36 @@ gapminder %>%
 ```
 
 6.What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
+###In descending order: France, Austria, Belgium, Norway, Oman, U.k., Italy, Israel, Denmark, Australia.
+```{r}
+library(plyr)
+xx <- data.frame(group = gapminder$country, a = gapminder$lifeExp , b = gapminder$gdpPercap)
+head(xx)
+require(plyr)
+func <- function(xx)
+return(data.frame(COR = cor(xx$a, xx$b)))
+cor<-ddply(xx, .(group), func)
+arrange(cor, desc(COR))
+
+###plot(xx$a,xx$b, xlab = "Life Expectancy", ylab = "per capita GDP", main="Correlation of Life expectancy and per capita GDP")
+```
+
 7.Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
+
+```{r}
+
+```
+
 8.Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
+
+```{r}
+
+```
+
 9.Subset gm to only include observations from 1992 and store the results as gm1992. What kind of object is this?
+
+```{r}
+
+```
+
 10.Which observations indicate that the population of a country has decreased from the previous year and the life expectancy has increased from the previous year? See the vignette on window functions.
