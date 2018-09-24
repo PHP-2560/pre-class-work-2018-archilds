@@ -16,20 +16,23 @@ gapminder
 ```
 
 1.How many unique countries are represented per continent?
+###I found that Africa has 52, the Americas have 25, Asia has 33, Europe has 30, and Oceania has 2 unique countries according to continent.
 ```{r}
-gapminder %>%
+x1<-gapminder %>%
   group_by(continent) %>%
   distinct(country) %>%
   arrange(continent)
+colSums(table(x1))
+
 ```
 
 
 2.Which European nation had the lowest GDP per capita in 1997?
-###Bosnia and Herzegovina had the lowest GDP per capita in 1997.
+###Albania had the lowest GDP per capita in Europe in 1997.
 
 ```{r}
 gapminder %>%
-  filter(continent=="Europe")%>%
+  filter(continent=="Europe", year==1997)%>%
   arrange(gdpPercap)
 
 ``` 
@@ -38,11 +41,13 @@ gapminder %>%
 3.According to the data available, what was the average life expectancy across each continent in the 1980s?
 
 ```{r}
-gapminder %>%
+x3<-gapminder %>%
+  filter(year>=1980 & year<=1989) %>% 
   group_by(continent) %>%
-  filter(!is.na(year>=1980 & year<=1989)) %>% 
-  arrange(year) %>%
-  summarise(avg_lifeexp=mean(lifeExp))
+  arrange(year) 
+x3
+colSums(table(x3))
+  #summarise(avg_lifeexp=mean(lifeExp))
 ```
 
 4.What 5 countries have the highest total GDP over all years combined?
