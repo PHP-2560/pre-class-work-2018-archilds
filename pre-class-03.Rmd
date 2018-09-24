@@ -16,6 +16,14 @@ gapminder
 ```
 
 1.How many unique countries are represented per continent?
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  distinct(country) %>%
+  arrange(continent)
+```
+
+
 2.Which European nation had the lowest GDP per capita in 1997?
 3.According to the data available, what was the average life expectancy across each continent in the 1980s?
 4.What 5 countries have the highest total GDP over all years combined?
