@@ -39,19 +39,16 @@ gapminder %>%
 
 
 3.According to the data available, what was the average life expectancy across each continent in the 1980s?
-
+###The Average life expectancies across each continent were 52.47 (Africa), 67.16 (Americas), 63.73 (Asia), 73.22 (Europe), and 74.81 (Oceania).
 ```{r}
-x3<-gapminder %>%
-  filter(year>=1980 & year<=1989) %>% 
+gapminder %>%
   group_by(continent) %>%
-  arrange(year) 
-x3
-colSums(table(x3))
-  #summarise(avg_lifeexp=mean(lifeExp))
+  filter(year >="1980", year <="1989") %>% 
+  summarize(avg_life= mean(lifeExp)) 
 ```
 
 4.What 5 countries have the highest total GDP over all years combined?
-###Kuwait(1), Switzerland (2), Norway (3), United States (4), and Canada (5).
+### The 5 countries with the highest total GDP over all years combined are Kuwait(1), Switzerland (2), Norway (3), United States (4), and Canada (5).
 ```{r}
 gapminder %>%
   group_by(country) %>%
@@ -61,16 +58,15 @@ gapminder %>%
 ```
 
 5.What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
-### Australia (2002 & 2007), Canada (2007), France (2007), Hong Kong, China (1997, 2002, 2007), Iceland (2002 & 2007), and Israel (2007).
+### The folowing countries and years had life expectancies of at least 80 years: Australia (2002 & 2007), Canada (2007), France (2007), Hong Kong, China (1997, 2002, 2007), Iceland (2002 & 2007), Israel (2007), Italy (2002 & 2007), Japan (1997, 2002, 2007), New Zealand (2007), Norway (2007), Spain (2007), Sweden (2002 & 2007), and Switzerland (2002 & 2007).
 ```{r}
 gapminder %>%
   filter(lifeExp>=80) %>%
   select(country, lifeExp, year)
-
 ```
 
 6.What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
-###In descending order: France, Austria, Belgium, Norway, Oman, U.k., Italy, Israel, Denmark, Australia.
+###In descending order, the following 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP: France, Austria, Belgium, Norway, Oman, U.k., Italy, Israel, Denmark, Australia.
 ```{r}
 library(plyr)
 xx <- data.frame(group = gapminder$country, a = gapminder$lifeExp , b = gapminder$gdpPercap)
