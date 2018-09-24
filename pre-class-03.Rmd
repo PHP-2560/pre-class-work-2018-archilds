@@ -56,6 +56,14 @@ gapminder %>%
 ```
 
 5.What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
+### Australia (2002 & 2007), Canada (2007), France (2007), Hong Kong, China (1997, 2002, 2007), Iceland (2002 & 2007), and Israel (2007).
+```{r}
+gapminder %>%
+  filter(lifeExp>=80) %>%
+  select(country, lifeExp, year)
+
+```
+
 6.What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
 7.Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
 8.Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
