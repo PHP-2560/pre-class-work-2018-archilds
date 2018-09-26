@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r setup, include=FALSE}
 library(dplyr)
 library(gapminder)
+library(tidyverse)
 gapminder
 ```
 
@@ -81,14 +82,16 @@ arrange(cor, desc(COR))
 ```
 
 7.Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
+###The Americas continent combined with the year 2007, 2002, 1997, 1992, and 1987 have the highest average population across all countries.
 
 ```{r}
 gapminder %>%
-  group_by(continent) %>%
+  group_by(continent, country) %>%
   filter(continent !="Asia") %>%
-  cumsum(mean(pop)) %>%
   ungroup() %>%
   arrange(desc(pop))
+
+
 ```
 
 8.Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
