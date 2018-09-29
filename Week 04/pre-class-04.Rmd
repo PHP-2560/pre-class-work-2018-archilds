@@ -9,14 +9,36 @@ Make sure you commit this often with meaningful messages.
 ### Question 1:
 
 Using a loop, print the integers from 1 to 50. 
+```{r}
+integers<-c(1:50)
+for(i in integers){
+  print(integers[i])
+}
+
+```
 
 ### Question 2:
 
 A.  Using a loop, add all the integers between 0 and 1000.
+```{r}
+integers2<-c(1:100)
+for(i in integers){
+  print(integers[i]+1)
+}
+##what are they asking for??
+```
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
+```{r}
+
+
+```
 
 C. Now, repeat A and B WITHOUT using a loop.
+```{r}
+
+
+```
 
 ### Question 3:
 
