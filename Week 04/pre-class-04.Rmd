@@ -21,23 +21,28 @@ for(i in integers){
 
 A.  Using a loop, add all the integers between 0 and 1000.
 ```{r}
-integers2<-c(1:100)
-for(i in integers){
-  print(integers[i]+1)
+integers<-c(1:1000)
+for(x in 1:1000){
+  print(sum(seq(from=0, to=1000, by=1)))
+  break
 }
-##what are they asking for??
 ```
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
 ```{r}
-
-
+for(x in 1:1000){
+  print(sum(seq(from=0, to=1000, by=2)))
+  break
+}
 ```
 
 C. Now, repeat A and B WITHOUT using a loop.
 ```{r}
+#A
+sum(seq(from=1, to=1000, by=1))
 
-
+#B
+sum(seq(from=1, to=1000, by=2))
 ```
 
 ### Question 3:
