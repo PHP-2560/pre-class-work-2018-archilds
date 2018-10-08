@@ -18,11 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Standardizing a variable means subtracting the mean, and then dividing by the standard deviation. Let’s use a loop to standardize the numeric columns in the [Western Collaborative Group Study](https://clinicaltrials.gov/ct2/show/NCT00005174). This study began in 1960 with 3154 men ages 39-59, who were employed in one of 11 California based companies. They were followed until 1969 during this time, 257 of these men developed coronary heart disease (CHD). You can read this data in with the code below. You can access this dataset with the following code:
 
-```{R}
-
-suppressMessages(library(foreign))
-wcgs <- read.dta("https://drive.google.com/uc?export=download&id=0B8CsRLdwqzbzYWxfN3ExQllBQkU")
-```
 
 The data has the following variables:
 
@@ -95,38 +90,90 @@ bmi     Body Mass Index
 
 ### Question 1: Standardize Function
 
-A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector. 
-
 ```{r}
-library(standardize)
 library(dplyr)
-library(scales)
+suppressMessages(library(foreign))
+wcgs <- read.dta("https://drive.google.com/uc?export=download&id=0B8CsRLdwqzbzYWxfN3ExQllBQkU")
 ```
 
 ```{r}
-standardize.me<-function(x){
-  return(scale(x))
+
+##Part A
+standardize.me <- function(x){
+  for (i in x){
+    (i -mean(x))/sd(x)
+  }
 }
-?standardize.me
+
+standardize.me <- function(x) {
+ (x-mean(x))/sd(x)
+}
+
+standardize.me <- function(x) {
+ (x-mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
+}
+
+standardized.me = function(x)
+{
+  x = (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+  print(x)
+}
+
+#####Part B
+dim(wcgs)
+wcgs.new<-select_if(wcgs, is.numeric)
+wcgs.new
+unlist(apply(wcgs.new,1, as.numeric))
+typeof(wcgs.new)
+
+
+wnew<-wcgs.new1
+
+for (i in 1:length(wnew))
+{
+  wnew[,i] = standardized.me(wnew[,i])
+}
+
+
 ```
+
+A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector. 
+```{r}
+standardized.me = function(x)
+{
+  x = (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+  return(x)
+}
+
+
+```
+
 B. Assign all the numeric columns of the original WCGS dataset to a new dataset called WCGS.new.
 ```{r}
 dim(wcgs)
-wcgs
 wcgs.new<-select_if(wcgs, is.numeric)
 wcgs.new
+unlist(apply(wcgs.new,1, as.numeric))
+typeof(wcgs.new)
 ```
+
 C. Using a loop and your new function, standardize all the variables WCGS.new dataset.
 ```{r}
-for(i in wcgs.new){
-  standardize.me(wcgs.new)
-  print(wcgs.new)
+for (i in 1:length(wcgs.new))
+{
+  wcgs.new[,i] = standardized.me(wcgs.new[,i])
 }
 ```
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
 ```{r}
-#The mean and standard deviation of all the new standardized variables should be 0 and 1.
+#The mean and standard deviation of all the new standardized variables should be 0 (mean) and 1 (sd).
 
+for (i in 1:length(wcgs.new)) {
+ print(mean[i] <- mean(wcgs.new[,i],na.rm=TRUE))
+ print(sd[i]   <-   sd(wcgs.new[,i],na.rm=TRUE))
+}
+
+#ignore the 1st mean and sd - ID numbers
 ```
 
 
