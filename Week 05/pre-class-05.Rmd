@@ -96,47 +96,6 @@ suppressMessages(library(foreign))
 wcgs <- read.dta("https://drive.google.com/uc?export=download&id=0B8CsRLdwqzbzYWxfN3ExQllBQkU")
 ```
 
-```{r}
-
-##Part A
-standardize.me <- function(x){
-  for (i in x){
-    (i -mean(x))/sd(x)
-  }
-}
-
-standardize.me <- function(x) {
- (x-mean(x))/sd(x)
-}
-
-standardize.me <- function(x) {
- (x-mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
-}
-
-standardized.me = function(x)
-{
-  x = (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
-  print(x)
-}
-
-#####Part B
-dim(wcgs)
-wcgs.new<-select_if(wcgs, is.numeric)
-wcgs.new
-unlist(apply(wcgs.new,1, as.numeric))
-typeof(wcgs.new)
-
-
-wnew<-wcgs.new1
-
-for (i in 1:length(wnew))
-{
-  wnew[,i] = standardized.me(wnew[,i])
-}
-
-
-```
-
 A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector. 
 ```{r}
 standardized.me = function(x)
@@ -144,8 +103,6 @@ standardized.me = function(x)
   x = (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
   return(x)
 }
-
-
 ```
 
 B. Assign all the numeric columns of the original WCGS dataset to a new dataset called WCGS.new.
@@ -164,6 +121,7 @@ for (i in 1:length(wcgs.new))
   wcgs.new[,i] = standardized.me(wcgs.new[,i])
 }
 ```
+
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
 ```{r}
 #The mean and standard deviation of all the new standardized variables should be 0 (mean) and 1 (sd).
@@ -180,5 +138,38 @@ for (i in 1:length(wcgs.new)) {
 ### Question 2: Looping to Calculate
 
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
+```{r}
+
+#subset the different types of CHD
+typeof(wcgs)
+noCHD <- subset(wcgs, typchd69=="no CHD")
+MIorSD <- subset(wcgs,typchd69=="MI or SD")
+silentMI <- subset(wcgs,typchd69=="silent MI")
+angina <- subset(wcgs,typchd69=="angina")
+
+#Combine subset types into a list
+chdweight<-list("No CHD"=noCHD$weight,"MI or SD"= MIorSD$weight, "Silent MI"= silentMI$weight, "Angina"=angina$weight)
+
+#create a list for calculated means and run loop
+chdtypemeans<-list()
+
+for (i in 1:length(chdweight)) {
+  chdtypemeans[i]<-mean(chdweight[[i]])
+  print(chdtypemeans[i])
+}
+
+#No CHD: 169.55
+#MI or SD: 172.64
+#Silent MI: 176.35
+#Angina: 176.65
+
+```
+
 B. Now do the same thing, but now don’t use a loop
+```{r}
+wcgs %>%
+  group_by(typchd69) %>%
+  summarise(mean_weight = mean(weight))
+
+```
 
