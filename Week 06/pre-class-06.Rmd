@@ -12,14 +12,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Read the source code for each of the following three functions, puzzle out what they do, and then brainstorm better names.
 
-```
+```{r}
+#function name: prefix_test
 f1 <- function(string, prefix) {
   substr(string, 1, nchar(prefix)) == prefix
 }
+
+#function name: delete_last
 f2 <- function(x) {
   if (length(x) <= 1) return(NULL)
   x[-length(x)]
 }
+
+#function name: total_rep
 f3 <- function(x, y) {
   rep(y, length.out = length(x))
 }
@@ -27,8 +32,18 @@ f3 <- function(x, y) {
 
 2. Compare and contrast rnorm() and MASS::mvrnorm(). How could you make them more consistent?
 
+```{r}
+##rnorm is a univariate version, while MASS::mvrnorm is multivariate. This means that although they both sample from normal distributions, they are different types of normal distributions, and therefore have different spreads and different arguments. 
+##I think it would be a good idea to try and make MASS::mvrnorm more similar to rnorm, but due to the differences in arguments, spread, and distribution, it is difficult.
+```
+
 
 3. Use `lapply()` and an anonymous function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset. 
+
+```{r}
+
+
+```
 
 4. Use vapply() to:
     a. Compute the standard deviation of every column in a numeric data frame.
