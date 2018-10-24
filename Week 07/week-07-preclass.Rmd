@@ -31,7 +31,7 @@ With this project we will simulate a famoues probability problem. This will not 
  
 ```{r}
 set.seed(1)
-gambruin=function(bets,bankroll,prob){
+gambruin<-function(bets,bankroll,prob){
   t=0                   #turns
   while(bets>0) {       #while there are any bets
     pval=runif(1)       #the probability value runs a normal random number
@@ -87,7 +87,7 @@ mean1c
 d. the mean and variance of your bankroll after 100 hands (including busts).
 ```{r}
 set.seed(1)
-gambruin1=function(bets,bankroll,prob)
+gambruin1<-function(bets,bankroll,prob)
 {
   t=0
   while(bets>0) {
@@ -122,7 +122,41 @@ var(bankroll)
 ```
 
 e. the mean and variance of your bankroll after 500 hands (including busts).
- 
+```{r}
+set.seed(1)
+gambruin2<-function(bets,bankroll,prob)
+{
+  t=0
+  while(bets>0) {
+    pval=runif(1)
+    if(pval <= prob)
+    {
+      bankroll = bets + bankroll
+      bets = (bets + bankroll)*0.1
+    }else{
+      bankroll = bankroll-bets
+      bets = bets
+      }
+    t=t+1
+    if(t ==500){break}
+    if(bankroll< bets){break}
+  }
+  duration = t
+  return(bankroll)
+  
+}
+
+bankroll=numeric()
+it2 = 5000
+for(i in 1:it2)
+{
+  next2 = gambruin2(100,900,0.5)
+  bankroll=c(bankroll,next2)
+}
+
+mean(bankroll)
+var(bankroll)
+```
 
 
 Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
