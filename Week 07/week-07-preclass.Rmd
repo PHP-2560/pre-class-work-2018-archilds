@@ -30,15 +30,45 @@ options(scipen = 3, digits = 3)
 With this project we will simulate a famoues probability problem. This will not require knowledge of probability or statistics but only the logic to follow the steps in order to simulate this problem. This is one way to solve problems by using the computer. 
 
  1. **Gambler's Ruin**: Suppose you have a bankroll of $1000 and make bets of $100 on a fair game. By simulating the outcome directly for at most 5000 iterations of the game (or hands), estimate:
-    a. the probability that you have "busted" (lost all your money) by the time you have placed your one hundredth bet. 
-    b. the probability that you have busted by the time you have placed your five hundredth bet by simulating the outcome directly. 
-    c. the mean time you go bust, given that you go bust within the first 5000 hands.
-    d. the mean and variance of your bankroll after 100 hands (including busts).
-    e. the mean and variance of your bankroll after 500 hands (including busts).
  
-Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
+```{r}
+#set.seed(1)
+GR=function(bets,bankroll,prob){
+  k=0
+  while(bets>0) {       #while there are any bets
+    pval=runif(1)       #the probability value runs a normal random number
+    if(pval <= prob)    #if the probability value is less than or equal to the given 'prob' argument then run...
+    {
+      bankroll = bets + bankroll     
+      bets = (bets + bankroll)*0.1
+    }else{
+      bankroll = bankroll-bets
+      bets = bets
+      }
+    k=k+1
+    if(bankroll < bets){break}
+  }
+  durations = k
+  return(durations)
+}
 
-2. **Markov Chains**. Suppose you have a game where the probability of winning on your first hand is 48%; each time you win, that probability goes up by one percentage point for the next game (to a maximum of 100%, where it must stay), and each time you lose, it goes back down to 48%. Assume you cannot go bust and that the size of your wager is a constant $100.
-    a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
-    b. Repeat this process but change the starting probability to a new value within 2% either way. Get the expected return after 100 repetitions. Keep exploring until you have a return value that is as fair as you can make it. Can you do this automatically?
-    c. Repeat again, keeping the initial probability at 48%, but this time change the probability increment to a value different from 1%. Get the expected return after 100 repetitions. Keep changing this value until you have a return value that is as fair as you can make it. 
+durations = numeric()
+s = 5000
+for(i in 1:s)
+{
+  nextd = GR(100,900,0.5)
+  durations = c(durations,nextd)
+}
+
+```
+
+a. the probability that you have "busted" (lost all your money) by the time you have placed your one hundredth bet.
+```{r}
+a1a=length(durations)
+b1a=length(which(durations<=100))
+prob1a=b1a/a1a
+prob1a
+
+```
+
+
