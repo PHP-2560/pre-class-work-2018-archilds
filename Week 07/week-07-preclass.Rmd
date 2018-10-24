@@ -30,9 +30,9 @@ With this project we will simulate a famoues probability problem. This will not 
  1. **Gambler's Ruin**: Suppose you have a bankroll of $1000 and make bets of $100 on a fair game. By simulating the outcome directly for at most 5000 iterations of the game (or hands), estimate:
  
 ```{r}
-#set.seed(1)
-GR=function(bets,bankroll,prob){
-  k=0
+set.seed(1)
+gambruin=function(bets,bankroll,prob){
+  t=0                   #turns
   while(bets>0) {       #while there are any bets
     pval=runif(1)       #the probability value runs a normal random number
     if(pval <= prob)    #if the probability value is less than or equal to the given 'prob' argument then run...
@@ -43,19 +43,19 @@ GR=function(bets,bankroll,prob){
       bankroll = bankroll-bets
       bets = bets
       }
-    k=k+1
-    if(bankroll < bets){break}
+    t=t+1
+    if(bankroll < bets){break}   #if too little $ to make a bet
   }
-  duration = k
+  duration = t
   return(duration)
 }
 
 durations = numeric()
-s = 5000
-for(i in 1:s)
+it0 = 5000
+for(i in 1:it0)
 {
-  nextd = GR(100,900,0.5)
-  durations = c(durations,nextd)
+  next0 = gambruin(100,900,0.5)
+  durations = c(durations,next0)
 }
 
 ```
@@ -82,10 +82,44 @@ c. the mean time you go bust, given that you go bust within the first 5000 hands
 a1c=durations[which(durations<=5000)]
 mean1c=mean(a1c)
 mean1c
-
 ```
 
 d. the mean and variance of your bankroll after 100 hands (including busts).
+```{r}
+set.seed(1)
+gambruin1=function(bets,bankroll,prob)
+{
+  t=0
+  while(bets>0) {
+    pval=runif(1)
+    if(pval <= prob)
+    {
+      bankroll = bets + bankroll
+      bets = (bets + bankroll)*0.1
+    }else{
+      bankroll = bankroll-bets
+      bets = bets
+      }
+    t=t+1
+    if(t ==100){break}
+    if(bankroll<bets){break}
+  }
+  duration = t
+  return(bankroll)
+  
+}
+
+bankroll=numeric()
+it1 = 5000
+ for(i in 1:it1)
+{
+  next1 = gambruin1(100,900,0.5)
+  bankroll=c(bankroll,next1)
+  
+}
+mean(bankroll)
+var(bankroll)
+```
 
 e. the mean and variance of your bankroll after 500 hands (including busts).
  
