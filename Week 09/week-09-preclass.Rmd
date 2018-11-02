@@ -24,13 +24,14 @@ options(scipen = 3, digits = 3)
 
 ```{r}
 library(httr)
-webpage = GET("https://money.cnn.com/data/us_markets/")
+library(rvest)
+webpage = read_html(x="https://money.cnn.com/data/us_markets/")
 
 ```
 
 2. Get the session details (status, type, size) of the above mentioned URL.
 ```{r}
-
+html_session("https://money.cnn.com/data/us_markets/")
 ```
 3. Extract all of the sector names from the “Stock Sectors” table (bottom left of the web page.)
 ```{r}
