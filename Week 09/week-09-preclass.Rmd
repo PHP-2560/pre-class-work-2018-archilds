@@ -52,12 +52,16 @@ webpage %>%
 ```
 5. Extract the table “What’s Moving” (top middle of the web page) into a data-frame.
 ```{r}
-
+webpage %>%
+  html_nodes(css="table") %>%
+  html_table(fill=TRUE) %>%
+  .[[1]] 
 ```
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
 Hint: the base URL is “https://money.cnn.com”
 ```{r}
-
+url2<-"https://money.cnn.com"
+paste(url2,html_attr(html_nodes(webpage,"td .wsod_symbol"),"href"))
 ```
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
 ```{r}
