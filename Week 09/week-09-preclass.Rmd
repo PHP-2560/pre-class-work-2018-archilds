@@ -25,7 +25,8 @@ options(scipen = 3, digits = 3)
 ```{r}
 library(httr)
 library(rvest)
-webpage = read_html(x="https://money.cnn.com/data/us_markets/")
+url="https://money.cnn.com/data/us_markets/"
+webpage = read_html(url)
 
 ```
 
@@ -35,11 +36,19 @@ html_session("https://money.cnn.com/data/us_markets/")
 ```
 3. Extract all of the sector names from the “Stock Sectors” table (bottom left of the web page.)
 ```{r}
-html_text(html_nodes(webpage, "a[href*='sectors']"))
+webpage %>%
+  html_nodes(css="table") %>%
+  html_table(fill=TRUE) %>%
+  .[[2]] %>%
+  .[,1]
 ```
 4. Extract all of the “3 Month % Change” values from the “Stock Sectors” table.
 ```{r}
-
+webpage %>%
+  html_nodes(css="table") %>%
+  html_table(fill=TRUE) %>%
+  .[[2]] %>%
+  .[,2]
 ```
 5. Extract the table “What’s Moving” (top middle of the web page) into a data-frame.
 ```{r}
